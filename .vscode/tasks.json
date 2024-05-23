@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+      {
+          "label": "build",
+          "type": "shell",
+          "command": "gcc",
+          "args": [
+              "-o",
+              "${fileDirname}/${fileBasenameNoExtension}",
+              "${file}"
+          ],
+          "group": {
+              "kind": "build",
+              "isDefault": true
+          },
+          "problemMatcher": [
+              "$gcc"
+          ],
+      },
+      {
+          "label": "run",
+          "detail": "Generated task to run the c executable file",
+          "type": "shell",
+          "command": "${fileDirname}/${fileBasenameNoExtension}",
+          "args": [
+            "${fileDirname}/${input:filename}"
+        ],
+          "dependsOn": "build",
+          "group": {
+              "kind": "test",
+              "isDefault": true
+          },
+          "presentation": {
+              "echo": true,
+              "reveal": "always",
+              "focus": false,
+              "panel": "shared"
+          }
+      }
+  ],
+  "inputs": [
+      {
+          "id": "filename",
+          "type": "promptString",
+          "description": "Enter the filename argument",
+          "default": "my-db.db"
+      }
+  ]
+}

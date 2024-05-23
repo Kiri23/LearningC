@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "*.hbs": "handlebars",
+    "*.handlebars": "handlebars",
+    "stdio.h": "c",
+    "fcntl.h": "c",
+    "types.h": "c",
+    "unistd.h": "c",
+    "string.h": "c"
+  }
+}
