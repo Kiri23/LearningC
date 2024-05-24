@@ -1,0 +1,6 @@
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*.{mk,makefile,Makefile}]
+indent_style = tab
+indent_size = 4
