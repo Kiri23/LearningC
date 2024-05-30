@@ -10,6 +10,35 @@
 #include "common.h"
 #include "parse.h"
 
+int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employeesOut)
+{
+    if (fd < 0)
+    {
+        printf("Got a bad FD from the user\n");
+        return STATUS_ERROR;
+    }
+
+    int count = dbhdr->count;
+
+    struct employee_t *employees = calloc(count, sizeof(struct employee_t));
+    if (employees == -1)
+    {
+        printf("Malloc failed\n");
+        return STATUS_ERROR;
+    }
+
+    read(fd, employees, count * sizeof(struct employee_t));
+
+    int i = 0;
+    for (; i < count; i++)
+    {
+        employees[i].hours = ntohl(employees[i].hours);
+    }
+
+    *employeesOut = employees;
+    return STATUS_SUCCESS;
+}
+
 // int output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
 // {
 //     if (fd < 0)
