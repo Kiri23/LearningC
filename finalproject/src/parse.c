@@ -10,6 +10,26 @@
 #include "common.h"
 #include "parse.h"
 
+int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *addstring)
+{
+    printf("%s\n", addstring);
+
+    char *name = strtok(addstring, ",");
+
+    char *addr = strtok(NULL, ",");
+
+    char *hours = strtok(NULL, ",");
+
+    printf("%s %s %s\n", name, addr, hours);
+
+    strncpy(employees[dbhdr->count - 1].name, name, sizeof(employees[dbhdr->count - 1].name));
+    strncpy(employees[dbhdr->count - 1].address, addr, sizeof(employees[dbhdr->count - 1].address));
+
+    employees[dbhdr->count - 1].hours = atoi(hours);
+
+    return STATUS_SUCCESS;
+}
+
 int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employeesOut)
 {
     if (fd < 0)
@@ -19,6 +39,7 @@ int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employe
     }
 
     int count = dbhdr->count;
+    printf("Count: %d\n", count);
 
     struct employee_t *employees = calloc(count, sizeof(struct employee_t));
     if (employees == -1)
@@ -39,36 +60,7 @@ int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employe
     return STATUS_SUCCESS;
 }
 
-// int output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
-// {
-//     if (fd < 0)
-//     {
-//         printf("Got a bad FD from the user\n");
-//         return STATUS_ERROR;
-//     }
-
-//     int realcount = dbhdr->count;
-
-//     dbhdr->magic = htonl(dbhdr->magic);
-//     dbhdr->filesize = htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t) * realcount));
-//     dbhdr->count = htons(dbhdr->count);
-//     dbhdr->version = htons(dbhdr->version);
-
-//     lseek(fd, 0, SEEK_SET);
-
-//     write(fd, dbhdr, sizeof(struct dbheader_t));
-
-//     int i = 0;
-//     for (; i < realcount; i++)
-//     {
-//         employees[i].hours = htonl(employees[i].hours);
-//         write(fd, &employees[i], sizeof(struct employee_t));
-//     }
-
-//     return STATUS_SUCCESS;
-// }
-
-int output_file(int fd, struct dbheader_t *dbhdr)
+int output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
 {
     if (fd < 0)
     {
@@ -77,16 +69,37 @@ int output_file(int fd, struct dbheader_t *dbhdr)
     }
 
     int realcount = dbhdr->count;
+    printf("Real count: %d\n", realcount);
 
     dbhdr->magic = htonl(dbhdr->magic);
-    dbhdr->filesize = htonl(dbhdr->filesize);
+    dbhdr->filesize = htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t) * realcount));
     dbhdr->count = htons(dbhdr->count);
     dbhdr->version = htons(dbhdr->version);
 
-    // bring the file pointer back to the beginning of the file
+    // go to the beginning of the file
     lseek(fd, 0, SEEK_SET);
+    // write the header
+    if (write(fd, dbhdr, sizeof(struct dbheader_t)) != sizeof(struct dbheader_t))
+    {
+        perror("write db header");
+        return STATUS_ERROR;
+    }
 
-    write(fd, dbhdr, sizeof(struct dbheader_t));
+    int i = 0;
+    for (; i < realcount; i++)
+    {
+        employees[i].hours = htonl(employees[i].hours);
+        printf("Writing employee %d\n", i);
+        printf("Name: %s\n", employees[i].name);
+        printf("Address: %s\n", employees[i].address);
+        printf("Hours: %d\n", employees[i].hours);
+        // save epmloyees data
+        if (write(fd, &employees[i], sizeof(struct employee_t)) != sizeof(struct employee_t))
+        {
+            perror("write employee");
+            return STATUS_ERROR;
+        }
+    }
 
     return STATUS_SUCCESS;
 }

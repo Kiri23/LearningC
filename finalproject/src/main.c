@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <getopt.h>
+#include <stdlib.h>
 
 #include "common.h"
 #include "file.h"
@@ -64,6 +65,7 @@ int main(int argc, char *argv[])
             printf("unable to create database file\n");
             return -1;
         }
+        printf("Database file created with fd: %d\n", dbfd);
         if (create_db_header(dbfd, &dbhdr) == STATUS_ERROR)
         {
             printf("unable to create database header\n");
@@ -78,6 +80,7 @@ int main(int argc, char *argv[])
             printf("unable to open database file\n");
             return -1;
         }
+        printf("Database file opened with fd: %d\n", dbfd);
         if (validate_db_header(dbfd, &dbhdr) == STATUS_ERROR)
         {
             printf("unable to validate database header\n");
@@ -90,7 +93,21 @@ int main(int argc, char *argv[])
         printf("unable to read employees\n");
         return 0;
     }
-    output_file(dbfd, dbhdr);
+
+    if (addstring)
+    {
+        dbhdr->count++;
+        employees = realloc(employees, dbhdr->count * sizeof(struct employee_t));
+        add_employee(dbhdr, employees, addstring);
+    }
+
+    printf("Before writing, fd: %d\n", dbfd);
+    if (output_file(dbfd, dbhdr, employees) != STATUS_SUCCESS)
+    {
+        printf("Error writing to file\n");
+        return -1;
+    }
+    printf("File written\n");
 
     return 0;
 }
