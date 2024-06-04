@@ -10,6 +10,18 @@
 #include "common.h"
 #include "parse.h"
 
+void list_employee(struct dbheader_t *dbhdr, struct employee_t *employees)
+{
+    int i = 0;
+    for (; i < dbhdr->count; i++)
+    {
+        printf("Employee %d\n", i);
+        printf("\tName: %s\n", employees[i].name);
+        printf("\tAddress: %s\n", employees[i].address);
+        printf("\tHours: %d\n", employees[i].hours);
+    }
+}
+
 int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *addstring)
 {
     printf("%s\n", addstring);
@@ -69,7 +81,6 @@ int output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
     }
 
     int realcount = dbhdr->count;
-    printf("Real count: %d\n", realcount);
 
     dbhdr->magic = htonl(dbhdr->magic);
     dbhdr->filesize = htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t) * realcount));
@@ -89,10 +100,6 @@ int output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
     for (; i < realcount; i++)
     {
         employees[i].hours = htonl(employees[i].hours);
-        printf("Writing employee %d\n", i);
-        printf("Name: %s\n", employees[i].name);
-        printf("Address: %s\n", employees[i].address);
-        printf("Hours: %d\n", employees[i].hours);
         // save epmloyees data
         if (write(fd, &employees[i], sizeof(struct employee_t)) != sizeof(struct employee_t))
         {

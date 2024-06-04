@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     struct dbheader_t *dbhdr = NULL;
     struct employee_t *employees = NULL;
 
+    // Todo: Delete and update options
     while ((c = getopt(argc, argv, "nf:a:l")) != -1)
     {
         switch (c)
@@ -100,8 +101,10 @@ int main(int argc, char *argv[])
         employees = realloc(employees, dbhdr->count * sizeof(struct employee_t));
         add_employee(dbhdr, employees, addstring);
     }
-
-    printf("Before writing, fd: %d\n", dbfd);
+    if (list)
+    {
+        list_employee(dbhdr, employees);
+    }
     if (output_file(dbfd, dbhdr, employees) != STATUS_SUCCESS)
     {
         printf("Error writing to file\n");
