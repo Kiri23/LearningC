@@ -10,6 +10,18 @@
 #include "common.h"
 #include "parse.h"
 
+void update_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *update)
+{
+    printf("%s\n", update);
+    char *name = strtok(update, ",");
+
+    char *addr = strtok(NULL, ",");
+
+    char *hours = strtok(NULL, ",");
+
+    printf("%s %s %s\n", name, addr, hours);
+   
+}
 void list_employee(struct dbheader_t *dbhdr, struct employee_t *employees)
 {
     int i = 0;
@@ -51,7 +63,6 @@ int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employe
     }
 
     int count = dbhdr->count;
-    printf("Count: %d\n", count);
 
     struct employee_t *employees = calloc(count, sizeof(struct employee_t));
     if (employees == -1)
@@ -162,6 +173,7 @@ int validate_db_header(int fd, struct dbheader_t **headerOut)
     }
 
     *headerOut = header;
+    return STATUS_SUCCESS;
 }
 
 int create_db_header(int fd, struct dbheader_t **headerOut)

@@ -25,5 +25,6 @@ int add_employee(struct dbheader_t *, struct employee_t *employee, char *addstri
 int read_employees(int fd, struct dbheader_t *, struct employee_t **employeesOut);
 int output_file(int fd, struct dbheader_t *, struct employee_t *employees);
 void list_employee(struct dbheader_t *, struct employee_t *employees);
+void update_employee(struct dbheader_t *, struct employee_t *employees, char *update);
 
 #endif
