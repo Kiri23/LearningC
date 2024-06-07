@@ -12,15 +12,77 @@
 
 void update_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *update)
 {
-    printf("%s\n", update);
-    char *name = strtok(update, ",");
+    char *nameToFind = strtok(update, ",");
 
+    char *name = strtok(NULL, ",");
     char *addr = strtok(NULL, ",");
 
     char *hours = strtok(NULL, ",");
 
-    printf("%s %s %s\n", name, addr, hours);
-   
+    printf("searching for %s\n", nameToFind);
+    printf("update string: %s %s %s\n", name, addr, hours);
+    if (!nameToFind || !name || !addr || !hours)
+    {
+        printf("Invalid update format.\n");
+        return;
+    }
+    // Check if the source strings fit in the destination buffers
+    if (strlen(name) >= sizeof(employees[0].name))
+    {
+        printf("New name is too long.\n");
+        return;
+    }
+    if (strlen(addr) >= sizeof(employees[0].address))
+    {
+        printf("Address is too long.\n");
+        return;
+    }
+    int i = 0;
+    for (; i < dbhdr->count; i++)
+    {
+        // if we found a match , case insensitive
+        if (strcasecmp(employees[i].name, nameToFind) == 0)
+        {
+            strncpy(employees[i].address, addr, sizeof(employees[i].address));
+            strncpy(employees[i].name, name, sizeof(employees[i].name));
+            employees[i].hours = atoi(hours);
+            printf("Updated employee %s\n", name);
+            break; // break once we found a match
+        }
+    }
+}
+int delete_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *delete)
+{
+    int employee_index = -1;
+    if (dbhdr->count < 1)
+    {
+        printf("Invalid Command: No Employees in the DB\n");
+        return STATUS_ERROR;
+    }
+
+    printf("searching for %s\n", delete);
+    for (int i = 0; i < dbhdr->count; i++)
+    {
+        printf("comparing %s\n", employees[i].name);
+        if (strcasecmp(delete, employees[i].name) == 0)
+        {
+            printf("index of employee to delete %d\n", i);
+            employee_index = i;
+            break;
+        }
+    }
+
+    if (employee_index != -1)
+    {
+        for (int i = employee_index; i < dbhdr->count - 1; i++)
+        {
+            employees[i] = employees[i + 1];
+        }
+
+        return STATUS_SUCCESS;
+    }
+
+    return STATUS_ERROR;
 }
 void list_employee(struct dbheader_t *dbhdr, struct employee_t *employees)
 {
@@ -118,7 +180,15 @@ int output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
             return STATUS_ERROR;
         }
     }
+    // Calculate the new size of the file
+    off_t new_size = sizeof(struct dbheader_t) + (sizeof(struct employee_t) * realcount);
 
+    // Truncate (remove old data) the file to the new size
+    if (ftruncate(fd, new_size) == -1)
+    {
+        perror("ftruncate");
+        return STATUS_ERROR;
+    }
     return STATUS_SUCCESS;
 }
 

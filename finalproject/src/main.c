@@ -16,7 +16,7 @@ void print_usage(char *argv)
     printf("\t-l : List all records\n");
     printf("\t-a <name>,<address>,<hours> : Add a new record\n");
     printf("\t-u <name>,<address>,<hours> : Update a record\n");
-    printf("\t-p <port> : Specify the port number\n");
+    printf("\t-d <name> : Delete a record\n");
 }
 int main(int argc, char *argv[])
 {
@@ -25,34 +25,34 @@ int main(int argc, char *argv[])
     bool list = false;
     bool newfile = false;
     char *update = NULL;
+    char *delete = NULL;
     int c;
     int dbfd = -1;
     struct dbheader_t *dbhdr = NULL;
     struct employee_t *employees = NULL;
 
     // Todo: Delete and update options
-    while ((c = getopt(argc, argv, "nf:a:lu:")) != -1)
+    while ((c = getopt(argc, argv, "nf:a:lu:d:")) != -1)
     {
-        printf("c: %c\n", c);
         switch (c)
         {
         case 'n':
             newfile = true;
             break;
         case 'f':
-            printf("file two: %s\n", optarg);
             filepath = optarg;
             break;
         case 'a':
-            printf("add two: %s\n", optarg);
             addstring = optarg;
             break;
         case 'l':
             list = true;
             break;
         case 'u':
-            printf("update two: %s\n", optarg);
             update = optarg;
+            break;
+        case 'd':
+            delete = optarg;
             break;
         case '?':
             printf("Unknown option -%c\n", c);
@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
             return -1;
         }
     }
-    printf("update: %s\n", update);
     if (filepath == NULL)
     {
         printf("FilePath is a required argument\n");
@@ -114,6 +113,17 @@ int main(int argc, char *argv[])
     if (update)
     {
         update_employee(dbhdr, employees, update);
+    }
+    if (delete)
+    {
+        if (delete_employee(dbhdr, employees, delete) == STATUS_ERROR)
+        {
+            printf("Could not remove employee");
+            return -1;
+        }
+
+        dbhdr->count--;
+        employees = realloc(employees, dbhdr->count * (sizeof(struct employee_t)));
     }
     if (list)
     {
