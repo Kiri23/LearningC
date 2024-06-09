@@ -7,16 +7,20 @@ int main()
 
     for (int i = 0; i < 10; i++)
     {
-        list.insert(i, i, &list);
+        int *x = (int *)malloc(sizeof(int));
+        *x = i;
+        list.insert(i, x, &list);
     }
 
     list.remove(3, &list);
     list.remove(7, &list);
-    list.insert(1, 99, &list);
+    int *new_value = (int *)malloc(sizeof(int));
+    *new_value = 99;
+    list.insert(1, new_value, &list);
 
     for (int i = 0; i < 10; i++)
     {
-        printf("Node at index %d: %d\n", i, list.retrieve(i, &list));
+        printf("Node at index %d: %d\n", i, *(int *)list.retrieve(i, &list));
     }
 
     // Attempt to retrieve an out-of-bounds index
