@@ -11,10 +11,10 @@
 #ifndef Node_h
 #define Node_h
 
-struct Node_int
+struct Node
 {
     void *data;
-    struct Node_int *next;
+    struct Node *next;
 };
 
 #endif /* Node_h */

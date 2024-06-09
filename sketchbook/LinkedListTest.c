@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include "../DataStructures/List/LinkedList.h"
 
+// I will "compile" the test file but will also include the "library" linked list file
+//  gcc LinkedListTest.c ../DataStructures/List/LinkedList.c -o ./bin/LinkedList
 int main()
 {
-    struct LinkedList_int list = linked_list_int_constructor();
+    struct LinkedList list = linked_list_constructor();
 
     for (int i = 0; i < 10; i++)
     {
