@@ -1,17 +1,18 @@
 {
   "files.associations": {
-    "Makefile": "makefile",
     "*.hbs": "handlebars",
     "*.handlebars": "handlebars",
+    "Makefile": "makefile",
     "stdio.h": "c",
     "fcntl.h": "c",
     "types.h": "c",
     "unistd.h": "c",
     "string.h": "c",
     "stat.h": "c",
+    "queue.h": "c"
   },
   "[makefile]": {
     "editor.insertSpaces": false,
     "editor.detectIndentation": false
-}
+  }
 }
