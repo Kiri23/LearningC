@@ -12,18 +12,24 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "../Common/Node.h"
+#include "Node.h"
 
 struct LinkedList
 {
+    // Head points to the first node in the chain.
     struct Node *head;
+    // Length refers to the number of nodes in the chain.
     int length;
 
-    void (*insert)(int index, void *data, struct LinkedList *linked_list);
-    void (*remove)(int index, struct LinkedList *linked_list);
-    void *(*retrieve)(int index, struct LinkedList *linked_list);
+    // Insert adds new items to the chain at a specified location - this function creates the new nodes.
+    void (*insert)(struct LinkedList *linked_list, int index, void *data, int data_type, int size);
+    // Remove deletes an item from the chain and handles the deallocation of memory.
+    void (*remove)(struct LinkedList *linked_list, int index);
+    // Retrieve allows data in the chain to be accessed
+    void *(*retrieve)(struct LinkedList *linked_list, int index);
 };
 
 struct LinkedList linked_list_constructor();
+void linked_list_destructor(struct LinkedList *linked_list);
 
 #endif /* LinkedList_h */
