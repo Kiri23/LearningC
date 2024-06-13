@@ -9,9 +9,8 @@ int main()
 
     for (int i = 0; i < 10; i++)
     {
-        int *x = (int *)malloc(sizeof(int));
-        *x = i;
-        queue.push(&queue, x, i, 0);
+        int x[3] = {i, i + 1, i + 3};
+        queue.push(&queue, x, Int, sizeof(x));
     }
 
     queue.pop(&queue);
@@ -19,7 +18,7 @@ int main()
     queue.pop(&queue);
     int *new_value = (int *)malloc(sizeof(int));
     *new_value = 99;
-    queue.push(&queue, new_value, 1, 0);
+    queue.push(&queue, new_value, Int, sizeof(new_value));
 
     // one of the drawback of using OOP is that I can acces the linked list functions from the queue functions
     // so i can manipulate the linked list directly and it will affect the queue

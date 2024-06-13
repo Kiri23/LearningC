@@ -24,7 +24,7 @@ int main()
         void *data = list.retrieve(&list, i);
         if (data != NULL)
         {
-            // it caugh me off guard that I have to pass the index of the next element that I want to access
+            // it caugh me off guard that I have to pass the index of the next element that I want to retrieve
             // the char array is at index 1 but I have to pass 2 because the retrieve function subtracts 1 from the index
             if (i == 2) // Special handling for the char array
             {
