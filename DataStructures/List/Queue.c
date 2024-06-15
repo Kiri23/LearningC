@@ -15,12 +15,15 @@ void push(struct Queue *queue, void *data, int data_type, int size)
 
 void *peek(struct Queue *queue)
 {
+    printf("Peeking1... %d\n", queue->list.length);
     void *data = queue->list.retrieve(&queue->list, 0);
+    printf("Peeking2... %d\n", queue->list.length);
     return data;
 }
 
 void pop(struct Queue *queue)
 {
+    printf("Popping... %d\n", queue->list.length);
     queue->list.remove(&queue->list, 0);
 }
 

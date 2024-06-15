@@ -93,7 +93,9 @@ void remove_node(struct LinkedList *linked_list, int index)
     }
     if (index == 0)
     {
+        printf("Removing head... %d\n", linked_list->length);
         struct Node *node_to_remove = linked_list->head;
+        printf("Removing head... %d\n", *(int *)linked_list->head->data);
         linked_list->head = node_to_remove->next;
         destroy_node(node_to_remove);
     }
@@ -109,6 +111,11 @@ void remove_node(struct LinkedList *linked_list, int index)
 
 void *retrieve(struct LinkedList *linked_list, int index)
 {
+    if (linked_list->head == NULL)
+    {
+        printf("List is empty.\n");
+        return NULL;
+    }
     if (index == 0)
     {
         return linked_list->head->data;
