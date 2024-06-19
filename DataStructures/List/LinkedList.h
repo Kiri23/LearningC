@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "Node.h"
+#include "../Common/Node.h"
 
 struct LinkedList
 {

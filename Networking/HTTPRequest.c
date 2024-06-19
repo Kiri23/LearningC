@@ -123,7 +123,7 @@ struct HTTPRequest http_request_constructor(char *request_string)
     HTTPVersion = strtok(HTTPVersion, "/");
     //skip the / in /1.1
     HTTPVersion = strtok(NULL, "/");
-    request.HTTPVersion = (float)atof(HTTPVersion);
+    request.HTTPVersion = (float)atof(HTTPVersion); 
 
     return request;
 }
