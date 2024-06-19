@@ -10,7 +10,7 @@ int main()
     for (int i = 0; i < 10; i++)
     {
         int x[3] = {i, i + 1, i * 2};
-        queue.push(&queue, x, Int, sizeof(x));
+        queue.push(&queue, x, sizeof(x));
     }
 
     queue.pop(&queue);
@@ -18,7 +18,7 @@ int main()
     queue.pop(&queue);
     int *new_value = (int *)malloc(sizeof(int));
     *new_value = 99;
-    queue.push(&queue, new_value, Int, sizeof(new_value));
+    queue.push(&queue, new_value, sizeof(new_value));
 
     // one of the drawback of using OOP is that I can acces the linked list functions from the queue functions
     // so i can manipulate the linked list directly and it will affect the queue
@@ -46,9 +46,9 @@ int main()
     int x[2] = {10, 5};
     int y[2] = {20, 10};
     printf("segmenation fault\n");
-    queue2.push(&queue2, &x, Int, sizeof(int));
+    queue2.push(&queue2, &x, sizeof(int));
     printf("queue2 at x %d: %d\n", 0, *(int *)queue2.peek(&queue2));
-    queue2.push(&queue2, &y, Int, sizeof(int));
+    queue2.push(&queue2, &y, sizeof(int));
     printf("queue2 at y %d: %d\n", 1, *(int *)queue2.peek(&queue2));
     queue2.pop(&queue2);
     printf("access violation\n");

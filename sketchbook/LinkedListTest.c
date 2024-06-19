@@ -9,17 +9,17 @@ int main()
 
     for (int i = 0; i < 10; i++)
     {
-        int x[10] = {i, i+ 2, i +3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9, i + 10};
-        list.insert(&list, i, x, Int, sizeof(x) / sizeof(int));
+        int x[10] = {i, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9, i + 10};
+        list.insert(&list, i, x, sizeof(x) / sizeof(int));
     }
 
     list.remove(&list, 3);
     list.remove(&list, 7);
     // this prove the point that the linked list can have different data types
     char new_value[3] = {'a', 'b', 'c'};
-    list.insert(&list, 1, new_value, Char, sizeof(new_value) / sizeof(char)); 
+    list.insert(&list, 1, new_value, sizeof(new_value) / sizeof(char));
 
-       for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
     {
         void *data = list.retrieve(&list, i);
         if (data != NULL)
@@ -31,7 +31,7 @@ int main()
                 // not sure why I dont get the char code printed out
                 char *char_value = (char *)data;
                 printf("Node Char at index %d: %d %d %d\n", i, char_value[0], char_value[1], char_value[2]);
-                 printf("Char array: %s\n", char_value); // Print the entire char array as a string
+                printf("Char array: %s\n", char_value); // Print the entire char array as a string
             }
             else
             {
@@ -51,7 +51,7 @@ int main()
 
     printf("Attempting to retrieve an out-of-bounds index...\n");
     // Attempt to retrieve an out-of-bounds index
-    list.retrieve(&list,100);
+    list.retrieve(&list, 100);
 
     return 0;
 }

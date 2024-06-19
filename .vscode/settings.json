@@ -9,7 +9,8 @@
     "unistd.h": "c",
     "string.h": "c",
     "stat.h": "c",
-    "queue.h": "c"
+    "queue.h": "c",
+    "linkedlist.h": "c"
   },
   "[makefile]": {
     "editor.insertSpaces": false,
