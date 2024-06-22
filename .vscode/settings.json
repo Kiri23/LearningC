@@ -10,7 +10,8 @@
     "string.h": "c",
     "stat.h": "c",
     "queue.h": "c",
-    "linkedlist.h": "c"
+    "linkedlist.h": "c",
+    "binarysearchtree.h": "c"
   },
   "[makefile]": {
     "editor.insertSpaces": false,

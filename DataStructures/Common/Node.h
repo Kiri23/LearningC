@@ -33,6 +33,7 @@ struct Node
     // The data is stored as a void pointer - casting is required for proper access.
     void *data;
     struct Node *next;
+    struct Node *previous;
 };
 
 /* METHODS */

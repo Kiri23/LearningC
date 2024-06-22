@@ -23,6 +23,7 @@ struct Node node_constructor(void *data, int size)
     memcpy(node.data, data, size);
     // Initialize the pointers.
     node.next = NULL;
+    node.previous = NULL;
     return node;
 }
 
