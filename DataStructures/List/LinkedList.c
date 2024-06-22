@@ -8,14 +8,14 @@
 #include "LinkedList.h"
 
 // private methods
-struct Node *create_node(void *data, int size);
-void destroy_node(struct Node *node_to_destroy);
+struct Node *create_node_ll(void *data, int size);
+void destroy_node_ll(struct Node *node_to_destroy);
 
 // public methods
-struct Node *iterate(struct LinkedList *linked_list, int index);
-void insert(struct LinkedList *linked_list, int index, void *data, int size);
-void remove_node(struct LinkedList *linked_list, int index);
-void *retrieve(struct LinkedList *linked_list, int index);
+struct Node *iterate_ll(struct LinkedList *linked_list, int index);
+void insert_ll(struct LinkedList *linked_list, int index, void *data, int size);
+void remove_node_ll(struct LinkedList *linked_list, int index);
+void *retrieve_ll(struct LinkedList *linked_list, int index);
 
 struct LinkedList linked_list_constructor()
 {
@@ -23,9 +23,9 @@ struct LinkedList linked_list_constructor()
     new_list.head = NULL;
     new_list.length = 0;
 
-    new_list.insert = insert;
-    new_list.remove = remove_node;
-    new_list.retrieve = retrieve;
+    new_list.insert = insert_ll;
+    new_list.remove = remove_node_ll;
+    new_list.retrieve = retrieve_ll;
 
     return new_list;
 }
@@ -38,7 +38,7 @@ void linked_list_destructor(struct LinkedList *linked_list)
     }
 }
 
-struct Node *create_node(void *data, int size)
+struct Node *create_node_ll(void *data, int size)
 {
     // this is what calling the "new" keyword (new Node) do under the hood
     struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
@@ -46,12 +46,12 @@ struct Node *create_node(void *data, int size)
     return new_node;
 }
 
-void destroy_node(struct Node *node_to_destroy)
+void destroy_node_ll(struct Node *node_to_destroy)
 {
     node_destructor(node_to_destroy);
 }
 
-struct Node *iterate(struct LinkedList *linked_list, int index)
+struct Node *iterate_ll(struct LinkedList *linked_list, int index)
 {
     if (index < 0 || index >= linked_list->length)
     {
@@ -66,9 +66,9 @@ struct Node *iterate(struct LinkedList *linked_list, int index)
     return cursor;
 }
 
-void insert(struct LinkedList *linked_list, int index, void *data, int size)
+void insert_ll(struct LinkedList *linked_list, int index, void *data, int size)
 {
-    struct Node *node_to_insert = create_node(data, size);
+    struct Node *node_to_insert = create_node_ll(data, size);
 
     if (index == 0)
     {
@@ -77,14 +77,14 @@ void insert(struct LinkedList *linked_list, int index, void *data, int size)
     }
     else
     {
-        struct Node *cursor = iterate(linked_list, index - 1);
+        struct Node *cursor = iterate_ll(linked_list, index - 1);
         node_to_insert->next = cursor->next;
         cursor->next = node_to_insert;
     }
     linked_list->length += 1;
 }
 
-void remove_node(struct LinkedList *linked_list, int index)
+void remove_node_ll(struct LinkedList *linked_list, int index)
 {
     if (linked_list->head == NULL)
     {
@@ -97,19 +97,19 @@ void remove_node(struct LinkedList *linked_list, int index)
         struct Node *node_to_remove = linked_list->head;
         printf("Removing head... %d\n", *(int *)linked_list->head->data);
         linked_list->head = node_to_remove->next;
-        destroy_node(node_to_remove);
+        destroy_node_ll(node_to_remove);
     }
     else
     {
-        struct Node *cursor = iterate(linked_list, index - 1);
+        struct Node *cursor = iterate_ll(linked_list, index - 1);
         struct Node *node_to_remove = cursor->next;
         cursor->next = node_to_remove->next;
-        destroy_node(node_to_remove);
+        destroy_node_ll(node_to_remove);
     }
     linked_list->length -= 1;
 }
 
-void *retrieve(struct LinkedList *linked_list, int index)
+void *retrieve_ll(struct LinkedList *linked_list, int index)
 {
     if (linked_list->head == NULL)
     {
@@ -120,6 +120,6 @@ void *retrieve(struct LinkedList *linked_list, int index)
     {
         return linked_list->head->data;
     }
-    struct Node *cursor = iterate(linked_list, index - 1);
+    struct Node *cursor = iterate_ll(linked_list, index - 1);
     return cursor->data;
 }
