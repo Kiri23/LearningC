@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include "../DataStructures/List/LinkedList.h"
+#include "../DataStructures/Lists/LinkedList.h"
 
 // I will "compile" the test file but will also include the "library" linked list file
 //  gcc LinkedListTest.c ../DataStructures/List/LinkedList.c ../DataStructures/List/Node.c -o ./bin/LinkedList
+// or use make a compile the header files into a static library and the gcc nameOfTestFile.c -o bin/nameOfTestFile ../hdelibc.a
 int main()
 {
     struct LinkedList list = linked_list_constructor();

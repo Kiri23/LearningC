@@ -11,7 +11,8 @@
     "stat.h": "c",
     "queue.h": "c",
     "linkedlist.h": "c",
-    "binarysearchtree.h": "c"
+    "binarysearchtree.h": "c",
+    "node.h": "c"
   },
   "[makefile]": {
     "editor.insertSpaces": false,

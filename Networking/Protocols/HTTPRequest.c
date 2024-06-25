@@ -83,6 +83,7 @@ int method_select(char *method)
 struct HTTPRequest http_request_constructor(char *request_string)
 {
     struct HTTPRequest request;
+    // I can't modify the request string directly that's why I'm copying it
     char requested[strlen(request_string) + 1];
     strcpy(requested, request_string);
     // Need to find the headers first since strtok mutates the string
@@ -121,9 +122,9 @@ struct HTTPRequest http_request_constructor(char *request_string)
     char *HTTPVersion = strtok(NULL, " ");
     // skip the HTTP
     HTTPVersion = strtok(HTTPVersion, "/");
-    //skip the / in /1.1
+    // skip the / in /1.1
     HTTPVersion = strtok(NULL, "/");
-    request.HTTPVersion = (float)atof(HTTPVersion); 
+    request.HTTPVersion = (float)atof(HTTPVersion);
 
     return request;
 }

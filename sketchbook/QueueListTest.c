@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include "../DataStructures/List/Queue.h"
+#include "../DataStructures/Lists/Queue.h"
 
 // I will "compile" the test file but will also include the "library" linked list file
 //  gcc QueueListTest.c ../DataStructures/List/Queue.c -o ./bin/QueueList
+// or use make to compile the header files into a static library and the gcc nameOfTestFile.c -o bin/nameOfTestFile ../hdelibc.a
 int main()
 {
     struct Queue queue = queue_constructor();

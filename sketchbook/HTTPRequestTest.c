@@ -8,9 +8,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "../Networking/Server.h"
-#include "../Networking/HTTPRequest.h"
-
+// #include "../Networking/Nodes/Server.h"
+// #include "../Networking/Protocols/HTTPRequest.h"
+#include "../Networking.h"
+// How to run with the static library gcc HTTPRequestTest.c ../hdelibc.a (note without -c or -o. a file called a.out will be generated)
+// modifies the other examples to run with the library
 void launch(struct Server *server)
 {
     char buffer[30000];

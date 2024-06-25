@@ -8,7 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "../Networking/Server.h"
+#include "../Networking/Nodes/Server.h"
+
 
 void launch(struct Server *server)
 {

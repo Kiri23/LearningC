@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../DataStructures/Trees/BinarySearchTree.h"
+// Run with gcc BinarySearchTreeTest.c -o bin/BinarySearchTreeTest ../hdelibc.a
 
 int compare_int(void *a, void *b)
 {
