@@ -29,7 +29,7 @@ These resources provide a structured approach to learning advanced C programming
 
 ## Key Projects
 ### 1. Database in File
-[View Project](./finalproject/README.md)
+[View Project](./database-in-file/README.md)
 
 This file-based database system simulates SQLite functionality:
 - Creation of new database files
@@ -39,6 +39,7 @@ This file-based database system simulates SQLite functionality:
 This project demonstrates file manipulation, data structures, and CLI design in C.
 
 ### 2. Web Server (In Progress)
+[view project](./web-server/README.md)
 Building a web server from scratch, similar to Flask or Express.js:
 - Implementing routing capabilities
 - Template rendering
