@@ -40,6 +40,7 @@ This project demonstrates file manipulation, data structures, and CLI design in 
 
 ### 2. Web Server (In Progress)
 [view project](./web-server/README.md)
+
 Building a web server from scratch, similar to Flask or Express.js:
 - Implementing routing capabilities
 - Template rendering
